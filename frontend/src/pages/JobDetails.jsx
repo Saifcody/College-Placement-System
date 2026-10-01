@@ -10,6 +10,8 @@ const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+const [hasApplied, setHasApplied] = useState(false);
+
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -26,6 +28,20 @@ const JobDetails = () => {
         );
 
         setJob(response.data.job);
+        const applicationResponse = await axios.get(
+  "http://localhost:5000/api/applications/my",
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+
+const alreadyApplied = applicationResponse.data.applications.some(
+  (application) => application.job?._id === id
+);
+
+setHasApplied(alreadyApplied);
       } catch (error) {
         console.error("Fetch Job Error:", error);
         setMessage("Failed to load job details.");
@@ -36,6 +52,33 @@ const JobDetails = () => {
 
     fetchJob();
   }, [id]);
+  const handleApply = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post(
+      "http://localhost:5000/api/applications",
+      {
+        jobId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    alert("Application submitted successfully!");
+  } catch (error) {
+    console.error("Apply Error:", error);
+
+    const message =
+      error.response?.data?.message ||
+      "Failed to submit application.";
+
+    alert(message);
+  }
+};
 
   if (loading) {
     return <div className="loading-message">Loading job details...</div>;
@@ -108,9 +151,13 @@ const JobDetails = () => {
           ))}
         </div>
 
-        <button className="view-details-btn">
-          Apply Now
-        </button>
+<button
+  className="view-details-btn"
+  onClick={handleApply}
+  disabled={hasApplied}
+>
+  {hasApplied ? "Already Applied ✓" : "Apply Now"}
+</button>
 
       </div>
 
