@@ -50,6 +50,9 @@ useEffect(() => {
                     <Link to="/jobs" className="sidebar-item">
   Jobs
 </Link>
+<Link to="/applications" className="sidebar-item">
+  My Applications
+</Link>
 
                    <Link to="/profile" className="sidebar-item">
     My Profile

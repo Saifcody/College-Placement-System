@@ -11,7 +11,7 @@ import Register from "./pages/Register";
 import StudentDashboard from "./pages/StudentDashboard";
 import Jobs from "./pages/Jobs";
 import JobDetails from "./pages/JobDetails";
-
+import MyApplications from "./pages/MyApplications";
 import {
     AuthProvider,
     useAuth
@@ -60,6 +60,14 @@ function App() {
   element={
     <ProtectedRoute>
       <JobDetails />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/applications"
+  element={
+    <ProtectedRoute>
+      <MyApplications />
     </ProtectedRoute>
   }
 />

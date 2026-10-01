@@ -1,0 +1,151 @@
+.applications-page {
+  padding: 30px;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.applications-header {
+  margin-bottom: 30px;
+}
+
+.applications-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+
+.applications-header p {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.applications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.application-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: 0.2s ease;
+}
+
+.application-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.09);
+}
+
+.application-info h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+  color: #111827;
+}
+
+.application-info p {
+  margin: 8px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.application-company {
+  color: #2563eb !important;
+  font-weight: 600;
+  font-size: 16px !important;
+}
+
+.application-status {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.status-badge {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.status-badge.shortlisted {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.interview {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.status-badge.selected {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.application-status button,
+.empty-applications button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.application-status button:hover,
+.empty-applications button:hover {
+  background: #1d4ed8;
+}
+
+.empty-applications {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 50px 30px;
+  text-align: center;
+}
+
+.empty-applications h2 {
+  margin: 0 0 10px;
+  color: #111827;
+}
+
+.empty-applications p {
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+.application-error {
+  color: #dc2626;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 700px) {
+  .application-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .application-status {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
