@@ -1,4 +1,7 @@
 const Application = require("../models/Application");
+const StudentProfile = require("../models/StudentProfile");
+const path = require("path");
+const fs = require("fs");
 
 const getAllApplications = async (req, res) => {
  
@@ -78,7 +81,74 @@ const updateApplicationStatus = async (req, res) => {
   }
 };
 
+const viewApplicantResume = async (req, res) => {
+  try {
+    const application = await Application.findById(req.params.id)
+      .populate({
+        path: "job",
+        select: "createdBy",
+      });
+
+    if (!application) {
+      return res.status(404).json({
+        success: false,
+        message: "Application not found.",
+      });
+    }
+
+    if (
+      !application.job ||
+      application.job.createdBy?.toString() !== req.user.id
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "You cannot access this applicant's resume.",
+      });
+    }
+
+    const profile = await StudentProfile.findOne({
+      user: application.student,
+    });
+
+    if (!profile || !profile.resume) {
+      return res.status(404).json({
+        success: false,
+        message: "This student has not uploaded a resume.",
+      });
+    }
+
+    const resumePath = path.resolve(
+      __dirname,
+      "../uploads/resumes",
+      path.basename(profile.resume)
+    );
+
+    if (!fs.existsSync(resumePath)) {
+      return res.status(404).json({
+        success: false,
+        message: "Resume file not found.",
+      });
+    }
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      'inline; filename="applicant-resume.pdf"'
+    );
+
+    return res.sendFile(resumePath);
+  } catch (error) {
+    console.error("View Applicant Resume Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve applicant resume.",
+    });
+  }
+};
+
 module.exports = {
   getAllApplications,
   updateApplicationStatus,
+  viewApplicantResume,
 };

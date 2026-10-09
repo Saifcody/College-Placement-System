@@ -145,3 +145,45 @@
     gap: 15px;
   }
 }
+
+.applicant-resume-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.view-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid #bfdbfe;
+  border-radius: 9px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.view-resume-btn:hover {
+  background: #dbeafe;
+  transform: translateY(-1px);
+}
+
+.view-resume-btn:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .applicant-resume-action {
+    width: 100%;
+  }
+
+  .view-resume-btn {
+    width: 100%;
+  }
+}

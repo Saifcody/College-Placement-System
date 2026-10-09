@@ -1,0 +1,161 @@
+
+/* Resume / CV Section */
+.resume-current {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  margin-bottom: 20px;
+}
+
+.resume-current p {
+  flex-basis: 100%;
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.resume-current strong {
+  color: #1e293b;
+}
+
+.resume-current button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.resume-current button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.resume-current button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+.profile-card input[type="file"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 12px 0 18px;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.profile-card input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 9px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #e2e8f0;
+  color: #1e293b;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-card input[type="file"]::file-selector-button:hover {
+  background: #cbd5e1;
+}
+
+@media (max-width: 600px) {
+  .resume-current {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .resume-current button {
+    width: 100%;
+  }
+}
+.resume-file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  margin-bottom: 16px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+}
+
+.resume-file-icon {
+  font-size: 28px;
+}
+
+.resume-file-info strong {
+  display: block;
+  color: #166534;
+  margin-bottom: 4px;
+}
+
+.resume-file-info p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upload-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 170px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.upload-resume-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28);
+}
+
+.upload-resume-btn:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+.upload-resume-btn:disabled {
+  background: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.upload-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: resume-spin 0.7s linear infinite;
+}
+
+@keyframes resume-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

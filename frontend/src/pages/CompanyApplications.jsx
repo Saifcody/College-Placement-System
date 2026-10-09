@@ -52,6 +52,43 @@ const CompanyApplications = () => {
       alert("Failed to update application status.");
     }
   };
+  
+const viewApplicantResume = async (applicationId) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(
+      `http://localhost:5000/api/admin/applications/${applicationId}/resume`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      }
+    );
+
+    const pdfBlob = new Blob([response.data], {
+      type: "application/pdf",
+    });
+
+    const url = window.URL.createObjectURL(pdfBlob);
+    window.open(url, "_blank", "noopener,noreferrer");
+
+    // Release the temporary URL after a delay.
+    setTimeout(() => window.URL.revokeObjectURL(url), 60000);
+  } catch (error) {
+    console.error("View Applicant Resume Error:", error);
+
+    if (error.response?.status === 404) {
+      alert("This student has not uploaded a resume yet.");
+    } else if (error.response?.status === 403) {
+      alert("You are not authorized to view this resume.");
+    } else {
+      alert("Failed to open the student's resume.");
+    }
+  }
+};
+
 
   if (loading) {
     return <div className="company-applications-page">Loading applications...</div>;
@@ -102,6 +139,17 @@ const CompanyApplications = () => {
                   📍 {application.job?.location}
                 </span>
               </div>
+              
+<div className="applicant-resume-action">
+  <button
+    type="button"
+    className="view-resume-btn"
+    onClick={() => viewApplicantResume(application._id)}
+  >
+    View Resume
+  </button>
+</div>
+
 
               <div className="application-status">
                 <label>Status</label>

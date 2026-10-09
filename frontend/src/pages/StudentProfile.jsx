@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import "./StudentProfile.css";
 const StudentProfile = () => {
   const [profile, setProfile] = useState({
     phone: "",
@@ -23,6 +23,10 @@ const StudentProfile = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+const [resumeFile, setResumeFile] = useState(null);
+const [resumeName, setResumeName] = useState("");
+const [uploadingResume, setUploadingResume] = useState(false);
+
 
   const token = localStorage.getItem("token");
 
@@ -39,7 +43,7 @@ const StudentProfile = () => {
         );
 
         const data = response.data.profile;
-
+setResumeName(data.resume || "");
         setProfile({
           ...data,
           dateOfBirth: data.dateOfBirth
@@ -115,6 +119,48 @@ const StudentProfile = () => {
       setSaving(false);
     }
   };
+  
+const handleResumeUpload = async (e) => {
+  e.preventDefault();
+
+  if (!resumeFile) {
+    setMessage("Please select a PDF resume first.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("resume", resumeFile);
+
+  try {
+    setUploadingResume(true);
+    setMessage("");
+
+    const response = await axios.post(
+      "http://localhost:5000/api/students/resume",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setResumeName(response.data.resume || "");
+    setResumeFile(null);
+    e.target.reset();
+
+    setMessage("Resume uploaded successfully!");
+  } catch (error) {
+    console.error("Resume Upload Error:", error);
+    setMessage(
+      error.response?.data?.message ||
+        "Failed to upload resume."
+    );
+  } finally {
+    setUploadingResume(false);
+  }
+};
+
 
   if (loading) {
     return <div className="profile-loading">Loading profile...</div>;
@@ -175,6 +221,122 @@ const StudentProfile = () => {
         {/* Academic Information */}
         <div className="profile-card">
           <h2>Academic Information</h2>
+          
+{/* Resume Upload */}
+<div className="profile-card">
+  <h2>Resume / CV</h2>
+
+  <p>
+    Upload your latest resume in PDF format (maximum 5 MB).
+  </p>
+
+{resumeName ? (
+  <div className="resume-current">
+    <div className="resume-file-info">
+  <span className="resume-file-icon">📄</span>
+
+  <div>
+    <strong>Resume uploaded successfully</strong>
+    <p>Your resume is ready to view or download.</p>
+  </div>
+</div>
+
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:5000/api/students/resume",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              responseType: "blob",
+            }
+          );
+
+          const url = window.URL.createObjectURL(response.data);
+          window.open(url, "_blank", "noopener,noreferrer");
+        } catch (error) {
+          console.error("View Resume Error:", error);
+          setMessage("Unable to open resume.");
+        }
+      }}
+    >
+      View Resume
+    </button>
+
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:5000/api/students/resume",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              responseType: "blob",
+            }
+          );
+
+          const url = window.URL.createObjectURL(response.data);
+          const link = document.createElement("a");
+
+          link.href = url;
+          link.download = "resume.pdf";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+
+          window.URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error("Download Resume Error:", error);
+          setMessage("Unable to download resume.");
+        }
+      }}
+    >
+      Download Resume
+    </button>
+  </div>
+) : (
+  <p>No resume uploaded yet.</p>
+)}
+
+
+  <form onSubmit={handleResumeUpload}>
+    <div className="form-group">
+      <label htmlFor="resume">Choose PDF Resume</label>
+
+      <input
+        id="resume"
+        type="file"
+        accept=".pdf,application/pdf"
+        onChange={(e) =>
+          setResumeFile(e.target.files?.[0] || null)
+        }
+      />
+    </div>
+
+    <button
+  type="submit"
+  className="upload-resume-btn"
+  disabled={uploadingResume || !resumeFile}
+>
+  {uploadingResume ? (
+    <>
+      <span className="upload-spinner"></span>
+      Uploading Resume...
+    </>
+  ) : (
+    <>
+      <span>↑</span> Upload Resume
+    </>
+  )}
+</button>
+  </form>
+</div>
+
 
           <div className="profile-grid">
             <div className="form-group">
