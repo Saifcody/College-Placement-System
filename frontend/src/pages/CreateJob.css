@@ -1,0 +1,130 @@
+.create-job-page {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f5f7fb;
+}
+
+.create-job-container {
+  max-width: 850px;
+  margin: 0 auto;
+  background: white;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.create-job-container h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+
+.create-job-container > p {
+  margin-top: 8px;
+  margin-bottom: 30px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.job-message {
+  margin-bottom: 20px;
+  padding: 12px 15px;
+  background: #ecfdf5;
+  color: #047857;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.cancel-btn,
+.create-job-btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.create-job-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.create-job-btn:hover {
+  background: #1d4ed8;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+}
+
+@media (max-width: 700px) {
+  .create-job-page {
+    padding: 20px;
+  }
+
+  .create-job-container {
+    padding: 25px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

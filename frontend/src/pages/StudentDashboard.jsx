@@ -225,7 +225,7 @@ useEffect(() => {
       jobs.slice(0, 3).map((job) => (
         <div className="job-item" key={job._id}>
 
-          <div className="company-logo">
+          <div className="job-company-logo">
             {job.companyName?.charAt(0).toUpperCase()}
           </div>
 

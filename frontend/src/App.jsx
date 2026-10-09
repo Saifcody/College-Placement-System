@@ -1,4 +1,7 @@
 import StudentProfile from "./pages/StudentProfile";
+import CompanyDashboard from "./pages/CompanyDashboard";
+import CompanyApplications from "./pages/CompanyApplications";
+
 import {
     BrowserRouter,
     Routes,
@@ -12,6 +15,10 @@ import StudentDashboard from "./pages/StudentDashboard";
 import Jobs from "./pages/Jobs";
 import JobDetails from "./pages/JobDetails";
 import MyApplications from "./pages/MyApplications";
+import CreateJob from "./pages/CreateJob";
+import MyJobs from "./pages/MyJobs";
+import EditJob from "./pages/EditJob";
+
 import {
     AuthProvider,
     useAuth
@@ -55,6 +62,46 @@ function App() {
             <BrowserRouter>
 
                 <Routes>
+                    <Route
+  path="/company/applications"
+  element={
+    <ProtectedRoute>
+      <CompanyApplications />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/company/create-job"
+  element={
+    <ProtectedRoute>
+      <CreateJob />
+    </ProtectedRoute>
+  }
+/>
+                    <Route
+  path="/company"
+  element={
+    <ProtectedRoute>
+      <CompanyDashboard />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/company/my-jobs"
+  element={
+    <ProtectedRoute>
+      <MyJobs />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/company/edit-job/:id"
+  element={
+    <ProtectedRoute>
+      <EditJob />
+    </ProtectedRoute>
+  }
+/>
                     <Route
   path="/jobs/:id"
   element={

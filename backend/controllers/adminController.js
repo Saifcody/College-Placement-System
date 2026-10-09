@@ -1,15 +1,24 @@
 const Application = require("../models/Application");
 
 const getAllApplications = async (req, res) => {
+ 
   try {
-    const applications = await Application.find()
-      .populate("student", "name email")
-      .populate("job", "companyName jobTitle location salary")
-      .sort({ createdAt: -1 });
+    console.log("Recruiter ID:", req.user.id);
+  const applications = await Application.find()
+  .populate({
+    path: "job",
+    match: { createdBy: req.user.id },
+    select: "companyName jobTitle location salary createdBy",
+  })
+  .populate("student", "name email")
+  .sort({ createdAt: -1 });
+  const companyApplications = applications.filter(
+  (application) => application.job !== null
+);
 
     res.status(200).json({
       success: true,
-      applications,
+      applications: companyApplications,
     });
   } catch (error) {
     console.error("Get All Applications Error:", error);

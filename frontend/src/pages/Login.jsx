@@ -39,15 +39,16 @@ const Login = () => {
 
             console.log("LOGIN USER:", user);
 
-            login(user, token);
+        login(user, token);
 
-            if (user.role === "student") {
-                navigate("/student-dashboard");
-            } else if (user.role === "company") {
-                navigate("/company-dashboard");
-            } else if (user.role === "admin") {
-                navigate("/admin-dashboard");
-            }
+if (user.role === "student") {
+  navigate("/student-dashboard");
+} else if (user.role === "company") {
+  navigate("/company");
+} else if (user.role === "admin") {
+  navigate("/admin-dashboard");
+}
+        
 
         } catch (error) {
             console.error("LOGIN ERROR:", error);
