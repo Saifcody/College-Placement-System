@@ -187,3 +187,289 @@
     width: 100%;
   }
 }
+
+.applications-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0 12px;
+  flex-wrap: wrap;
+}
+
+.applications-search {
+  flex: 1;
+  min-width: 240px;
+  padding: 13px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  color: #111827;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.applications-search:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.applications-filter {
+  min-width: 180px;
+  padding: 13px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  color: #111827;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.applications-count {
+  margin: 0 0 20px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .applications-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .applications-search,
+  .applications-filter {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+
+.application-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 170px;
+}
+
+.application-status label {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.status-select {
+  width: 100%;
+  max-width: 220px;
+  padding: 11px 36px 11px 13px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.status-select:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.status-applied {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+  border-color: #bfdbfe;
+}
+
+.status-shortlisted {
+  color: #047857;
+  background-color: #d1fae5;
+  border-color: #a7f3d0;
+}
+
+.status-interview {
+  color: #92400e;
+  background-color: #fef3c7;
+  border-color: #fde68a;
+}
+
+.status-selected {
+  color: #0f766e;
+  background-color: #ccfbf1;
+  border-color: #99f6e4;
+}
+
+.status-rejected {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  border-color: #fecaca;
+}
+
+.status-select option {
+  color: #111827;
+  background: #ffffff;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .application-status {
+    width: 100%;
+  }
+
+  .status-select {
+    max-width: none;
+  }
+}
+
+.applications-filter-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 220px;
+  flex: 0 0 240px;
+}
+
+.applications-filter-wrapper .filter-icon {
+  position: absolute;
+  left: 15px;
+  z-index: 1;
+  color: #2563eb;
+  font-size: 19px;
+  pointer-events: none;
+}
+
+.applications-filter-wrapper .applications-filter {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  min-width: 0;
+  padding: 14px 42px 14px 44px;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.applications-filter-wrapper .applications-filter:hover {
+  border-color: #93b4f8;
+}
+
+.applications-filter-wrapper .applications-filter:focus-visible {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.applications-filter-wrapper .applications-filter option {
+  background: #ffffff;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .applications-filter-wrapper {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+}
+
+/* Applications search and filter layout */
+.applications-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin: 24px 0 12px;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
+}
+
+.applications-search {
+  display: block;
+  flex: 1 1 auto;
+  width: 0;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.applications-filter-wrapper {
+  display: flex;
+  position: relative;
+  flex: 0 0 240px;
+  width: 240px;
+  min-width: 240px;
+  box-sizing: border-box;
+}
+
+.applications-filter-wrapper .applications-filter {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.applications-count {
+  margin: 0 0 20px;
+}
+
+@media (max-width: 600px) {
+  .applications-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .applications-search,
+  .applications-filter-wrapper {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+}
+
+.application-status-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.status-badge-applied {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.status-badge-shortlisted {
+  color: #047857;
+  background: #d1fae5;
+}
+
+.status-badge-interview {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.status-badge-selected {
+  color: #0f766e;
+  background: #ccfbf1;
+}
+
+.status-badge-rejected {
+  color: #b91c1c;
+  background: #fee2e2;
+}
