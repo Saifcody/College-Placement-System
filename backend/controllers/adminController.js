@@ -32,6 +32,7 @@ const getAllApplications = async (req, res) => {
     });
   }
 };
+
 const updateApplicationStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -51,13 +52,12 @@ const updateApplicationStatus = async (req, res) => {
       });
     }
 
-    const application = await Application.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      {
-        returnDocument: "after",
-      }
-    );
+    // Find the application and its associated job
+    const application = await Application.findById(req.params.id)
+      .populate({
+        path: "job",
+        select: "createdBy",
+      });
 
     if (!application) {
       return res.status(404).json({
@@ -66,7 +66,30 @@ const updateApplicationStatus = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    // Check that the job exists
+    if (!application.job) {
+      return res.status(404).json({
+        success: false,
+        message: "Associated job not found",
+      });
+    }
+
+    // Allow admins, but restrict company users to their own jobs
+    if (
+      req.user.role !== "admin" &&
+      application.job.createdBy?.toString() !== req.user.id
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "You cannot update applications for another company's job",
+      });
+    }
+
+    // Update the status only after authorization
+    application.status = status;
+    await application.save();
+
+    return res.status(200).json({
       success: true,
       message: "Application status updated successfully",
       application,
@@ -74,12 +97,13 @@ const updateApplicationStatus = async (req, res) => {
   } catch (error) {
     console.error("Update Application Status Error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to update application status",
     });
   }
 };
+
 
 const viewApplicantResume = async (req, res) => {
   try {
