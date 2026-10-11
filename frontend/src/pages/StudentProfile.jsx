@@ -165,6 +165,8 @@ const handleResumeUpload = async (e) => {
   if (loading) {
     return <div className="profile-loading">Loading profile...</div>;
   }
+  
+
 
   return (
     <div className="profile-page">

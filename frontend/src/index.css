@@ -803,3 +803,161 @@ body {
     padding: 20px;
   }
 }
+/* Student Dashboard - Application Status layout */
+.application-status.dashboard-card {
+  padding: 24px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.application-status .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.application-status .card-header h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+}
+
+.application-status .card-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.application-status .card-header .view-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.recent-application-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-application-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 0;
+  border-top: 1px solid #e8edf5;
+}
+
+.recent-application-details {
+  min-width: 0;
+}
+
+.recent-application-details h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.recent-application-details p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.application-status-badge {
+  flex-shrink: 0;
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-badge-applied {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-badge-shortlisted {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.status-badge-interview {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge-selected {
+  background: #ccfbf1;
+  color: #0f766e;
+}
+
+.status-badge-rejected {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+  .application-status .card-header {
+    flex-wrap: wrap;
+  }
+
+  .recent-application-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.application-status .card-header {
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.application-status .card-header > div {
+  flex: 1;
+  min-width: 150px;
+}
+
+.application-status .card-header h2 {
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.application-status .card-header .view-btn {
+  padding: 10px 16px;
+}
+
+@media (min-width: 900px) {
+  .dashboard-grid {
+    align-items: stretch;
+  }
+}
+
+.student-layout .sidebar button.sidebar-item {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #e5e7eb;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.student-layout .sidebar button.sidebar-item:hover {
+  background: #1e293b;
+}
+
+/* Remove underline from sidebar links */
+.student-layout .sidebar a,
+.student-layout .student-info {
+  text-decoration: none !important;
+}
+
+/* Remove underline on hover too */
+.student-layout .sidebar a:hover,
+.student-layout .student-info:hover {
+  text-decoration: none !important;
+}

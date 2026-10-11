@@ -7,6 +7,7 @@ const StudentDashboard = () => {
     const navigate = useNavigate();
 
 const [jobs, setJobs] = useState([]);
+const [applications, setApplications] = useState([]);
 
 useEffect(() => {
   const fetchJobs = async () => {
@@ -31,55 +32,117 @@ useEffect(() => {
   fetchJobs();
 }, []);
 
+useEffect(() => {
+  const fetchApplications = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.get(
+      "http://localhost:5000/api/applications/my",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setApplications(response.data.applications || []);
+    } catch (error) {
+      console.error("Dashboard Applications Error:", error);
+    }
+  };
+
+  fetchApplications();
+}, []);
+
+
+const totalApplications = applications.length;
+
+const shortlistedApplications = applications.filter(
+  (application) => application.status === "Shortlisted"
+).length;
+
+const interviewApplications = applications.filter(
+  (application) => application.status === "Interview"
+).length;
+
+const handleViewResume = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(
+      "http://localhost:5000/api/students/resume",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      }
+    );
+
+    const url = window.URL.createObjectURL(response.data);
+    const newWindow = window.open(url, "_blank");
+
+    if (!newWindow) {
+      window.URL.revokeObjectURL(url);
+      alert("Please allow pop-ups to view your resume.");
+      return;
+    }
+
+    newWindow.opener = null;
+    window.setTimeout(() => window.URL.revokeObjectURL(url), 60000);
+  } catch (error) {
+    console.error("View Resume Error:", error);
+
+    if (error.response?.status === 404) {
+      alert("No resume uploaded yet. Please upload it from My Profile.");
+    } else {
+      alert("Unable to open resume. Please check your uploaded resume.");
+    }
+  }
+};
+
+
+
     return (
         <div className="student-layout">
 
-            {/* Sidebar */}
-            <aside className="sidebar">
+       <aside className="sidebar">
+  <div className="logo">
+    <h2>PlaceMate</h2>
+    <p>College Placement System</p>
+  </div>
 
-                <div className="logo">
-                    <h2>PlaceMate</h2>
-                    <p>College Placement System</p>
-                </div>
+  <nav>
+    <Link to="/student-dashboard" className="sidebar-item active">
+      Dashboard
+    </Link>
 
-                <nav>
+    <Link to="/jobs" className="sidebar-item">
+      Jobs
+    </Link>
 
-                    <a className="active">
-                        Dashboard
-                    </a>
-                    <Link to="/jobs" className="sidebar-item">
-  Jobs
-</Link>
-<Link to="/applications" className="sidebar-item">
-  My Applications
-</Link>
+    <Link to="/applications" className="sidebar-item">
+      My Applications
+    </Link>
 
-                   <Link to="/profile" className="sidebar-item">
-    My Profile
-</Link>
+    <Link to="/profile" className="sidebar-item">
+      My Profile
+    </Link>
 
-                    <a>
-                        Job Opportunities
-                    </a>
+    <button
+      type="button"
+      className="sidebar-item"
+      onClick={handleViewResume}
+    >
+      My Resume
+    </button>
+  </nav>
 
-                    <a>
-                        My Applications
-                    </a>
-
-                    <a>
-                        My Resume
-                    </a>
-
-                </nav>
-
-                <button
-                    className="sidebar-logout"
-                    onClick={logout}
-                >
-                    Logout
-                </button>
-
-            </aside>
+  <button className="sidebar-logout" onClick={logout}>
+    Logout
+  </button>
+</aside>
 
 
             {/* Main Content */}
@@ -95,18 +158,20 @@ useEffect(() => {
                         </p>
                     </div>
 
-                    <div className="student-info">
+             
+<Link to="/profile" className="student-info student-profile-link">
+  <div className="avatar">
+    {user?.name?.charAt(0).toUpperCase()}
+  </div>
 
-                        <div className="avatar">
-                            {user?.name?.charAt(0).toUpperCase()}
-                        </div>
+  <div>
+    <strong>{user?.name}</strong>
+    <span>Student</span>
+  </div>
+</Link>
 
-                        <div>
-                            <strong>{user?.name}</strong>
-                            <span>Student</span>
-                        </div>
 
-                    </div>
+                  
 
                 </header>
 
@@ -268,19 +333,66 @@ useEffect(() => {
 </div>
 
 
-                    {/* Application Status */}
-                    <div className="application-status">
-  <p style={{ color: "#6b7280" }}>
-    You haven't applied to any jobs yet.
-  </p>
+ 
+{/* Recent Application Status */}
+<div className="application-status dashboard-card">
+  <div className="card-header">
+    <div>
+      <h2>My Application Status</h2>
+      <p>Track your latest applications</p>
+    </div>
 
-  <button
-    className="view-btn"
-    onClick={() => navigate("/jobs")}
-  >
-    Browse Jobs
-  </button>
+    <button
+      className="view-btn"
+      onClick={() => navigate("/applications")}
+    >
+      View All
+    </button>
+  </div>
+
+  {applications.length === 0 ? (
+    <div className="application-empty-state">
+      <p>You haven't applied to any jobs yet.</p>
+      <button
+        className="view-btn"
+        onClick={() => navigate("/jobs")}
+      >
+        Browse Jobs
+      </button>
+    </div>
+  ) : (
+    <div className="recent-application-list">
+      {[...applications]
+        .slice(0, 5)
+        .map((application) => (
+          <div
+            className="recent-application-item"
+            key={application._id}
+          >
+            <div className="recent-application-details">
+              <h3>
+                {application.job?.jobTitle || "Job Application"}
+              </h3>
+              <p>
+                {application.job?.companyName || "Company"}
+              </p>
+            </div>
+
+            <span
+              className={`application-status-badge status-badge-${application.status
+                ?.toLowerCase()
+                .replace(/\s+/g, "-")}`}
+            >
+              {application.status === "Interview"
+                ? "Interview Scheduled"
+                : application.status || "Applied"}
+            </span>
+          </div>
+        ))}
+    </div>
+  )}
 </div>
+
 
                 </section>
 
