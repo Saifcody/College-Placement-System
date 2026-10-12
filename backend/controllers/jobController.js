@@ -120,7 +120,7 @@ const updateJob = async (req, res) => {
     }
 
     // Only the company that created the job can update it
-    if (job.createdBy.toString() !== req.user.id) {
+    if (!job.createdBy || job.createdBy.toString() !== req.user.id) {
       return res.status(403).json({
         success: false,
         message: "You can only update your own jobs",
