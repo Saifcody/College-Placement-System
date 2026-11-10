@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import "./CompanyApplications.css";
 
 const CompanyApplications = () => {
@@ -14,8 +14,8 @@ const CompanyApplications = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.get(
-        "http://localhost:5000/api/admin/applications",
+      const response = await api.get(
+        "/admin/applications",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,8 +59,8 @@ const CompanyApplications = () => {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.put(
-        `http://localhost:5000/api/admin/applications/${applicationId}/status`,
+      await api.put(
+        `/admin/applications/${applicationId}/status`,
         { status },
         {
           headers: {
@@ -80,8 +80,8 @@ const CompanyApplications = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.get(
-        `http://localhost:5000/api/admin/applications/${applicationId}/resume`,
+      const response = await api.get(
+        `/admin/applications/${applicationId}/resume`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

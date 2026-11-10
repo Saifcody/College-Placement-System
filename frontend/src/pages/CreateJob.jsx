@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import "./CreateJob.css";
 
 const CreateJob = () => {
@@ -32,8 +32,8 @@ const CreateJob = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.post(
-        "http://localhost:5000/api/jobs",
+      const response = await api.post(
+        "/jobs",
         {
           ...formData,
           skillsRequired: formData.skillsRequired

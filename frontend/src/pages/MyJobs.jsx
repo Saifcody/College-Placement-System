@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import "./MyJobs.css";
 
 const MyJobs = () => {
@@ -15,8 +15,8 @@ const MyJobs = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get(
-          "http://localhost:5000/api/jobs/my-jobs",
+        const response = await api.get(
+          "/jobs/my-jobs",
           {
             headers: {
               Authorization: `Bearer ${token}`,

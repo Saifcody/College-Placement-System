@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import "./CompanyDashboard.css";
 
 const CompanyDashboard = () => {
@@ -12,8 +12,8 @@ useEffect(() => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.get(
-        "http://localhost:5000/api/admin/applications",
+      const response = await api.get(
+      "/admin/applications",
         {
           headers: {
             Authorization: `Bearer ${token}`,

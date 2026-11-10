@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import "./Jobs.css";
 
 const JobDetails = () => {
@@ -18,8 +18,8 @@ const [hasApplied, setHasApplied] = useState(false);
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get(
-          `http://localhost:5000/api/jobs/${id}`,
+        const response = await api.get(
+          `/jobs/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -28,8 +28,8 @@ const [hasApplied, setHasApplied] = useState(false);
         );
 
         setJob(response.data.job);
-        const applicationResponse = await axios.get(
-  "http://localhost:5000/api/applications/my",
+        const applicationResponse = await api.get(
+  "/applications/my",
   {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -56,8 +56,8 @@ setHasApplied(alreadyApplied);
   try {
     const token = localStorage.getItem("token");
 
-    await axios.post(
-      "http://localhost:5000/api/applications",
+    await api.post(
+      "/applications",
       {
         jobId: id,
       },

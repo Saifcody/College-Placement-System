@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 const StudentDashboard = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
@@ -14,8 +14,8 @@ useEffect(() => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.get(
-        "http://localhost:5000/api/jobs",
+      const response = await api.get(
+        "/jobs",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,8 +37,8 @@ useEffect(() => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.get(
-      "http://localhost:5000/api/applications/my",
+      const response = await api.get(
+      "/applications/my",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -70,8 +70,8 @@ const handleViewResume = async () => {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await axios.get(
-      "http://localhost:5000/api/students/resume",
+    const response = await api.get(
+      "/students/resume",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -222,7 +222,7 @@ const handleViewResume = async () => {
 
                         <div>
                             <p>Applications</p>
-                            <h2>8</h2>
+                            <h2>{totalApplications}</h2>
                         </div>
 
                     </div>
@@ -236,7 +236,7 @@ const handleViewResume = async () => {
 
                         <div>
                             <p>Shortlisted</p>
-                            <h2>2</h2>
+                            <h2>{shortlistedApplications}</h2>
                         </div>
 
                     </div>
@@ -250,7 +250,7 @@ const handleViewResume = async () => {
 
                         <div>
                             <p>Interviews</p>
-                            <h2>1</h2>
+                            <h2>{interviewApplications}</h2>
                         </div>
 
                     </div>

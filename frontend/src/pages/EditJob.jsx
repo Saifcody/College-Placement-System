@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import "./EditJob.css";
 
 const EditJob = () => {
@@ -29,8 +29,8 @@ const EditJob = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get(
-          `http://localhost:5000/api/jobs/${id}`,
+        const response = await api.get(
+          `/jobs/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -104,8 +104,8 @@ const EditJob = () => {
         status: formData.status,
       };
 
-      await axios.put(
-        `http://localhost:5000/api/jobs/${id}`,
+      await api.put(
+        `/jobs/${id}`,
         updatedJob,
         {
           headers: {

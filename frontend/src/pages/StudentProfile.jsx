@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import "./StudentProfile.css";
 const StudentProfile = () => {
   const [profile, setProfile] = useState({
@@ -33,8 +33,8 @@ const [uploadingResume, setUploadingResume] = useState(false);
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/students/profile",
+        const response = await api.get(
+        "/students/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -85,8 +85,8 @@ setResumeName(data.resume || "");
         .map((skill) => skill.trim())
         .filter((skill) => skill !== "");
 
-      const response = await axios.put(
-        "http://localhost:5000/api/students/profile",
+      const response = await api.put(
+        "/students/profile",
         {
           ...profile,
           skills,
@@ -135,8 +135,8 @@ const handleResumeUpload = async (e) => {
     setUploadingResume(true);
     setMessage("");
 
-    const response = await axios.post(
-      "http://localhost:5000/api/students/resume",
+    const response = await api.post(
+     "/students/resume",
       formData,
       {
         headers: {
@@ -247,8 +247,8 @@ const handleResumeUpload = async (e) => {
       type="button"
       onClick={async () => {
         try {
-          const response = await axios.get(
-            "http://localhost:5000/api/students/resume",
+          const response = await api.get(
+              "/students/resume",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -261,7 +261,13 @@ const handleResumeUpload = async (e) => {
           window.open(url, "_blank", "noopener,noreferrer");
         } catch (error) {
           console.error("View Resume Error:", error);
-          setMessage("Unable to open resume.");
+          if (error.response?.status === 404) {
+            setMessage(
+              "Resume file not found on the server. The server may have restarted and cleared uploaded files. Please re-upload your resume."
+            );
+          } else {
+            setMessage("Unable to open resume. Please try again.");
+          }
         }
       }}
     >
@@ -272,8 +278,8 @@ const handleResumeUpload = async (e) => {
       type="button"
       onClick={async () => {
         try {
-          const response = await axios.get(
-            "http://localhost:5000/api/students/resume",
+          const response = await api.get(
+            "/students/resume",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -294,7 +300,13 @@ const handleResumeUpload = async (e) => {
           window.URL.revokeObjectURL(url);
         } catch (error) {
           console.error("Download Resume Error:", error);
-          setMessage("Unable to download resume.");
+          if (error.response?.status === 404) {
+            setMessage(
+              "Resume file not found on the server. The server may have restarted and cleared uploaded files. Please re-upload your resume."
+            );
+          } else {
+            setMessage("Unable to download resume. Please try again.");
+          }
         }
       }}
     >
